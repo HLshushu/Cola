@@ -8,29 +8,37 @@ var async = require('async');
 exports.index = function(req, res) {   
     
     async.parallel({
-        // book_count: function(callback) {
-        //     Book.count({}, callback); // Pass an empty object as match condition to find all documents of this collection
-        // },
-        // book_instance_count: function(callback) {
-        //     BookInstance.count({}, callback);
-        // },
-        // book_instance_available_count: function(callback) {
-        //     BookInstance.count({status:'Available'}, callback);
-        // },
-        // author_count: function(callback) {
-        //     Author.count({}, callback);
-        // },
-        // genre_count: function(callback) {
-        //     Genre.count({}, callback);
-        // },
+        book_count: function(callback) {
+            Book.count({}, callback); // Pass an empty object as match condition to find all documents of this collection
+        },
+        book_instance_count: function(callback) {
+            BookInstance.count({}, callback);
+        },
+        book_instance_available_count: function(callback) {
+            BookInstance.count({status:'Available'}, callback);
+        },
+        author_count: function(callback) {
+            Author.count({}, callback);
+        },
+        genre_count: function(callback) {
+            Genre.count({}, callback);
+        },
     }, function(err, results) {
         res.render('index', { title: 'Local Library Home', error: err, data: results });
     });
 };
 
-// 显示完整的藏书列表
-exports.book_list = (req, res) => {
-  res.send('未实现：藏书列表');
+// Display list of all Books.
+exports.book_list = function(req, res, next) {
+
+  Book.find({}, 'title author')
+    .populate('author')
+    .exec(function (err, list_books) {
+      if (err) { return next(err); }
+      //Successful, so render
+      res.render('book_list', { title: 'Book List', book_list: list_books });
+    });
+    
 };
 
 // 为每种藏书显示详细信息的页面
