@@ -19,7 +19,10 @@ var BookInstance = require('./models/bookinstance')
 
 var mongoose = require('mongoose');
 var mongoDB = userArgs[0];
-var mongoDBUrl = 'mongodb+srv://huliang:huliang@cluster0-2fgex.mongodb.net/test?retryWrites=true&w=majority';
+// Local Mongo DB
+var mongoDBUrl = 'mongodb://127.0.0.1:27017';
+// Cloud-based Mongo DB
+// var mongoDBUrl = 'mongodb+srv://huliang:huliang@codemaster-2fgex.azure.mongodb.net/test?retryWrites=true&w=majority';
 mongoose.connect(mongoDBUrl, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;

@@ -12,7 +12,10 @@ var app = express();
 
 // Set up mongoose connection
 var mongoose = require('mongoose');
-var dev_db_url = 'mongodb+srv://huliang:huliang@codemaster-2fgex.azure.mongodb.net/test?retryWrites=true&w=majority'
+// Local Mongo DB
+var dev_db_url = 'mongodb://127.0.0.1:27017';
+// Cloud-based Mongo DB
+// var dev_db_url = 'mongodb+srv://huliang:huliang@codemaster-2fgex.azure.mongodb.net/test?retryWrites=true&w=majority'
 var mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
