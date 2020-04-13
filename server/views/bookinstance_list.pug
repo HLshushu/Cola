@@ -8,7 +8,8 @@ block content
     li 
       a(href=val.url) #{val.book.title} : #{val.imprint} - 
       if val.status=='Available'
-        span.text-success #{val.status}
+        //span  (Due: #{val.due_back} )
+        span  (Due: #{val.due_back_formatted} )
       else if val.status=='Maintenance'
         span.text-danger #{val.status}
       else

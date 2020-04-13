@@ -13,9 +13,22 @@ exports.bookinstance_list = function(req, res, next) {
     
 };
 
-// 为藏书的每一本副本显示详细信息的页面
-exports.bookinstance_detail = (req, res) => {
-  res.send('未实现：藏书副本详细信息：' + req.params.id);
+// Display detail page for a specific BookInstance.
+exports.bookinstance_detail = function(req, res, next) {
+
+  BookInstance.findById(req.params.id)
+  .populate('book')
+  .exec(function (err, bookinstance) {
+    if (err) { return next(err); }
+    if (bookinstance==null) { // No results.
+        var err = new Error('Book copy not found');
+        err.status = 404;
+        return next(err);
+      }
+    // Successful, so render.
+    res.render('bookinstance_detail', { title: 'Book:', bookinstance:  bookinstance});
+  })
+
 };
 
 // 由 GET 显示创建藏书副本的表单
